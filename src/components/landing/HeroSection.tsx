@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "../ui/Button";
 import { useAuction } from "../../lib/store/useAuction";
 
@@ -10,19 +10,22 @@ export function HeroSection() {
   const { auction } = useAuction();
 
   return (
-    <section className="relative overflow-hidden pt-16 pb-24 md:pt-28 md:pb-36 bg-void bg-tech-grid">
+    <section className="relative overflow-hidden pt-16 pb-24 md:pt-28 md:pb-36 bg-stadium-hero">
+      {/* Technical Grid Overlay sitting above stadium vignette and below text */}
+      <div className="absolute inset-0 bg-tech-grid pointer-events-none z-[2] opacity-80" />
+
       {/* Editorial Watermark / Registration Marks */}
-      <div className="absolute top-8 left-8 text-[10px] font-mono text-white/[0.06] select-none uppercase tracking-[0.3em] hidden sm:block">
+      <div className="absolute top-8 left-8 text-[10px] font-mono text-white/[0.08] select-none uppercase tracking-[0.3em] hidden sm:block z-10">
         REG {"//"} VITB-MUN-2026
       </div>
-      <div className="absolute top-8 right-8 text-[10px] font-mono text-white/[0.06] select-none uppercase tracking-[0.3em] hidden sm:block">
+      <div className="absolute top-8 right-8 text-[10px] font-mono text-white/[0.08] select-none uppercase tracking-[0.3em] hidden sm:block z-10">
         STAGE 01 {"//"} SYSTEM ACTIVE
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-10">
         {/* Top Micro-Header */}
-        <div className="inline-flex items-center gap-2.5 px-3 py-1 bg-deep border border-graphite rounded-sm">
-          <span className="w-1.5 h-1.5 rounded-full bg-gold" />
+        <div className="inline-flex items-center gap-2.5 px-3 py-1 bg-deep/90 border border-graphite rounded-sm backdrop-blur-xs">
+          <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
           <span className="text-[11px] font-mono font-bold tracking-[0.2em] text-silver-light uppercase">
             VIT BHOPAL MUN CLUB PRESENTS
           </span>
@@ -30,7 +33,7 @@ export function HeroSection() {
 
         {/* Cinematic Main Title */}
         <div className="space-y-4 max-w-4xl mx-auto">
-          <h1 className="text-5xl sm:text-7xl md:text-8xl font-display font-black text-silver-bright uppercase tracking-[-0.03em] leading-[0.95]">
+          <h1 className="text-5xl sm:text-7xl md:text-8xl font-display font-black text-silver-bright uppercase tracking-[-0.03em] leading-[0.95] drop-shadow-sm">
             THE IPL <br />
             <span className="text-gold">MEGA AUCTION</span>
           </h1>

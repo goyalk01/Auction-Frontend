@@ -25,17 +25,22 @@ export default function LiveAuctionPage() {
   };
 
   return (
-    <main className="min-h-screen bg-void flex flex-col select-none bg-tech-grid font-sans">
+    <main className="min-h-screen bg-stadium-auction flex flex-col select-none font-sans relative overflow-x-hidden">
+      {/* Technical Grid Overlay sitting above subtle stadium atmosphere */}
+      <div className="absolute inset-0 bg-tech-grid pointer-events-none z-[2] opacity-70" />
+
       {/* Dynamic Broadcast Header Rail */}
-      <BroadcastHeader
-        viewMode={viewMode}
-        selectedTeamId={selectedTeamId}
-        onSelectCommon={handleSelectCommon}
-        onSelectTeam={handleSelectTeam}
-      />
+      <div className="relative z-10">
+        <BroadcastHeader
+          viewMode={viewMode}
+          selectedTeamId={selectedTeamId}
+          onSelectCommon={handleSelectCommon}
+          onSelectTeam={handleSelectTeam}
+        />
+      </div>
 
       {/* Main Live Stage Container */}
-      <div className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6">
+      <div className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 relative z-10">
         {viewMode === "common" ? (
           <CommonBoard onSelectTeam={handleSelectTeam} />
         ) : activeTeamState ? (
