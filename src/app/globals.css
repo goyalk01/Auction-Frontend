@@ -81,7 +81,7 @@ h1, h2, h3, h4, h5, h6, .font-display {
     linear-gradient(to bottom, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
 }
 
-/* Cinematic Night Stadium Environmental Backgrounds */
+/* Cinematic Night Stadium Environmental Backgrounds — Enhanced Visibility */
 .bg-stadium-hero {
   position: relative;
   background-color: var(--black-void);
@@ -93,10 +93,10 @@ h1, h2, h3, h4, h5, h6, .font-display {
   inset: 0;
   background-image: url('/images/stadium-bg.png');
   background-size: cover;
-  background-position: center 15%;
+  background-position: center 25%;
   background-repeat: no-repeat;
-  opacity: 0.11;
-  filter: grayscale(50%) brightness(0.6) contrast(1.2);
+  opacity: 0.30;
+  filter: saturate(0.85) brightness(0.82) contrast(1.18);
   pointer-events: none;
   z-index: 0;
 }
@@ -106,8 +106,8 @@ h1, h2, h3, h4, h5, h6, .font-display {
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(ellipse at 50% 20%, rgba(5, 5, 5, 0.2) 0%, rgba(5, 5, 5, 0.7) 50%, rgba(5, 5, 5, 0.95) 80%, #050505 100%),
-    linear-gradient(to bottom, rgba(5, 5, 5, 0.4) 0%, rgba(5, 5, 5, 0.75) 45%, rgba(5, 5, 5, 0.96) 85%, #050505 100%);
+    radial-gradient(ellipse at 50% 25%, transparent 20%, rgba(5, 5, 5, 0.35) 55%, rgba(5, 5, 5, 0.8) 85%, #050505 100%),
+    linear-gradient(to bottom, rgba(5, 5, 5, 0.3) 0%, transparent 20%, transparent 60%, rgba(5, 5, 5, 0.75) 85%, #050505 100%);
   pointer-events: none;
   z-index: 1;
 }
@@ -125,8 +125,8 @@ h1, h2, h3, h4, h5, h6, .font-display {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  opacity: 0.055;
-  filter: grayscale(60%) brightness(0.5) contrast(1.15);
+  opacity: 0.16;
+  filter: saturate(0.8) brightness(0.72) contrast(1.12);
   pointer-events: none;
   z-index: 0;
 }
@@ -136,10 +136,17 @@ h1, h2, h3, h4, h5, h6, .font-display {
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(circle at 50% 30%, rgba(5, 5, 5, 0.3) 0%, rgba(5, 5, 5, 0.85) 65%, #050505 100%),
-    linear-gradient(to bottom, rgba(5, 5, 5, 0.6) 0%, rgba(5, 5, 5, 0.9) 100%);
+    radial-gradient(ellipse at 50% 25%, transparent 25%, rgba(5, 5, 5, 0.45) 65%, #050505 100%),
+    linear-gradient(to bottom, rgba(5, 5, 5, 0.35) 0%, rgba(5, 5, 5, 0.7) 100%);
   pointer-events: none;
   z-index: 1;
+}
+
+/* Localized Center Text Protective Backdrop */
+.hero-text-backdrop {
+  background: radial-gradient(ellipse at center, rgba(5, 5, 5, 0.65) 0%, rgba(5, 5, 5, 0.35) 65%, transparent 100%);
+  padding: 1.5rem;
+  border-radius: 1rem;
 }
 
 /* Thin Editorial Hairlines */
