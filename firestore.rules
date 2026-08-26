@@ -1,0 +1,53 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // For a controlled university event with ~60 known participants:
+    // - All auction data is publicly readable (spectators, big screen, judge view)
+    // - All write operations require Firebase Authentication (anonymous sign-in)
+    // - UI-level role gates (Admin, Team, Judge) provide the access control layer
+    // - Bid and AuditLog documents are append-only (immutable once created)
+
+    match /events/{eventId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+
+      match /teams/{teamId} {
+        allow read: if true;
+        allow write: if isAuthenticated();
+      }
+
+      match /players/{playerId} {
+        allow read: if true;
+        allow write: if isAuthenticated();
+      }
+
+      match /bids/{bidId} {
+        allow read: if true;
+        allow create: if isAuthenticated();
+        allow update, delete: if false; // Immutable bid history
+      }
+
+      match /auditLogs/{logId} {
+        allow read: if true;
+        allow create: if isAuthenticated();
+        allow update, delete: if false; // Immutable audit history
+      }
+    }
+
+    match /auctionState/{eventId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated();
+    }
+  }
+}
