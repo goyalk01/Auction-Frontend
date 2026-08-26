@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useAuction } from "../../lib/store/useAuction";
 import { Button } from "../ui/Button";
 import { ManualBidModal } from "./ManualBidModal";
+import { formatLakhs } from "../../lib/formatting";
 
 export function AuctionControlBar() {
   const {
@@ -22,6 +23,39 @@ export function AuctionControlBar() {
   const [manualBidOpen, setManualBidOpen] = useState(false);
   const isLive = auction.status === "LIVE";
   const hasCurrentBid = auction.currentBid > 0 && auction.leadingTeamId !== null;
+
+  const handleHammerSold = () => {
+    if (!currentPlayer || !hasCurrentBid) return;
+    const teamName = leadingTeam ? leadingTeam.franchise.name : "Leading Team";
+    const bidFormatted = formatLakhs(auction.currentBid);
+    const confirmed = window.confirm(
+      `CONFIRM HAMMER SOLD:\n\nSell Lot #${currentPlayer.id.replace("p-", "")} (${currentPlayer.name}) to ${teamName} for ${bidFormatted}?`
+    );
+    if (confirmed) {
+      markSold();
+    }
+  };
+
+  const handleMarkUnsold = () => {
+    if (!currentPlayer) return;
+    const confirmed = window.confirm(
+      `CONFIRM UNSOLD:\n\nMark Lot #${currentPlayer.id.replace("p-", "")} (${currentPlayer.name}) as UNSOLD for this round?`
+    );
+    if (confirmed) {
+      markUnsold();
+    }
+  };
+
+  const handleUndoBid = () => {
+    if (auction.recentBids.length === 0) return;
+    const lastBid = auction.recentBids[0];
+    const confirmed = window.confirm(
+      `CONFIRM REVOKE BID:\n\nRevoke latest bid of ${formatLakhs(lastBid.amount)} from ${lastBid.teamName}?`
+    );
+    if (confirmed) {
+      undoLastBid();
+    }
+  };
 
   return (
     <>
@@ -68,22 +102,22 @@ export function AuctionControlBar() {
             </Button>
           )}
 
-          {/* Mark SOLD */}
+          {/* Mark SOLD with confirmation */}
           <Button
             variant="gold"
             size="md"
-            onClick={() => markSold()}
+            onClick={handleHammerSold}
             disabled={!hasCurrentBid || !currentPlayer}
             title={hasCurrentBid ? `Sell to ${leadingTeam?.franchise.name}` : "Requires at least 1 bid"}
           >
             HAMMER SOLD
           </Button>
 
-          {/* Mark UNSOLD */}
+          {/* Mark UNSOLD with confirmation */}
           <Button
             variant="danger"
             size="md"
-            onClick={markUnsold}
+            onClick={handleMarkUnsold}
             disabled={!currentPlayer}
           >
             MARK UNSOLD
@@ -99,11 +133,11 @@ export function AuctionControlBar() {
             PROXY BID
           </Button>
 
-          {/* Undo Bid */}
+          {/* Undo Bid with confirmation */}
           <Button
             variant="outline"
             size="md"
-            onClick={undoLastBid}
+            onClick={handleUndoBid}
             disabled={auction.recentBids.length === 0}
           >
             UNDO BID

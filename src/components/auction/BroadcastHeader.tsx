@@ -4,8 +4,21 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Maximize, Minimize, Volume2, VolumeX, ArrowLeft } from "lucide-react";
 import { useAuction } from "../../lib/store/useAuction";
+import { AuctionViewToggle } from "./AuctionViewToggle";
 
-export function BroadcastHeader() {
+interface BroadcastHeaderProps {
+  viewMode: "common" | "team";
+  selectedTeamId: string | null;
+  onSelectCommon: () => void;
+  onSelectTeam: (teamId: string) => void;
+}
+
+export function BroadcastHeader({
+  viewMode,
+  selectedTeamId,
+  onSelectCommon,
+  onSelectTeam,
+}: BroadcastHeaderProps) {
   const { auction, toggleSound, currentPlayer } = useAuction();
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -31,9 +44,9 @@ export function BroadcastHeader() {
       : "text-silver-dark";
 
   return (
-    <header className="h-14 px-6 sm:px-8 bg-void hairline-b flex items-center justify-between shrink-0 select-none">
-      {/* Left: Brand & Lot */}
-      <div className="flex items-center gap-6">
+    <header className="h-14 px-4 sm:px-6 lg:px-8 bg-void hairline-b flex items-center justify-between shrink-0 select-none">
+      {/* Left: Brand & Home Link */}
+      <div className="flex items-center gap-3 sm:gap-5">
         <Link
           href="/"
           className="p-1.5 rounded-sm border border-graphite text-silver-dark hover:text-silver-bright hover:border-silver transition-colors"
@@ -42,36 +55,36 @@ export function BroadcastHeader() {
           <ArrowLeft className="w-4 h-4" />
         </Link>
 
-        <div className="flex items-center gap-3">
-          <span className="font-display font-black text-sm tracking-[0.2em] text-silver-bright uppercase">
+        <div className="flex items-center gap-2">
+          <span className="font-display font-black text-sm tracking-[0.15em] text-silver-bright uppercase">
             VITB—MUN
           </span>
-          <span className="text-[11px] font-mono text-silver-dark uppercase tracking-widest hidden sm:inline">
-            {"//"} LIVE AUCTION SYSTEM
+          <span className="text-[10px] font-mono text-silver-dark uppercase tracking-widest hidden md:inline">
+            {"//"} LIVE AUCTION
           </span>
         </div>
       </div>
 
-      {/* Center: Stage & Lot Metadata */}
-      <div className="flex items-center gap-4 font-mono text-xs">
-        <span className="text-silver uppercase tracking-widest">
-          ROUND 0{auction.round}
-        </span>
-        <span className="text-silver-dark">/</span>
-        <span className="text-silver-bright font-bold tracking-wider">
-          LOT {currentPlayer ? currentPlayer.id.replace("p-", "") : "---"}
-        </span>
+      {/* Center: View Switcher (Common Board vs Franchise Dossier) */}
+      <div className="flex items-center gap-3">
+        <AuctionViewToggle
+          viewMode={viewMode}
+          selectedTeamId={selectedTeamId}
+          onSelectCommon={onSelectCommon}
+          onSelectTeam={onSelectTeam}
+        />
       </div>
 
       {/* Right: Status & Controls */}
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2 px-2.5 py-1 bg-deep border border-graphite rounded-sm">
+      <div className="flex items-center gap-2.5 sm:gap-4">
+        {/* Status Indicator */}
+        <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 bg-deep border border-graphite rounded-sm font-mono">
           <span
             className={`w-2 h-2 rounded-full ${
               auction.status === "LIVE" ? "bg-info animate-pulse" : "bg-gold"
             }`}
           />
-          <span className={`text-[10px] font-mono font-bold uppercase tracking-widest ${statusColor}`}>
+          <span className={`text-[10px] font-bold uppercase tracking-widest ${statusColor}`}>
             ● {auction.status}
           </span>
         </div>
@@ -81,6 +94,7 @@ export function BroadcastHeader() {
           onClick={toggleSound}
           className="p-1.5 text-silver-dark hover:text-silver-bright transition-colors"
           title={auction.soundEnabled ? "Audio On" : "Audio Off"}
+          aria-label="Toggle Sound"
         >
           {auction.soundEnabled ? (
             <Volume2 className="w-4 h-4 text-gold" />
@@ -94,6 +108,7 @@ export function BroadcastHeader() {
           onClick={toggleFullscreen}
           className="p-1.5 text-silver-dark hover:text-silver-bright transition-colors"
           title="Toggle Fullscreen"
+          aria-label="Toggle Fullscreen"
         >
           {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
         </button>

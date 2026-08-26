@@ -26,27 +26,17 @@ export function Footer() {
         {/* Portals */}
         <div className="space-y-2.5">
           <h4 className="text-[10px] font-mono font-black uppercase tracking-[0.2em] text-silver-light">
-            TERMINALS
+            NAVIGATION
           </h4>
           <ul className="space-y-1.5 text-xs font-mono">
             <li>
+              <Link href="/" className="text-silver hover:text-gold transition-colors">
+                01. HOME
+              </Link>
+            </li>
+            <li>
               <Link href="/auction" className="text-silver hover:text-gold transition-colors">
-                01. 1080P BROADCAST
-              </Link>
-            </li>
-            <li>
-              <Link href="/team" className="text-silver hover:text-gold transition-colors">
-                02. CAPTAIN TERMINAL
-              </Link>
-            </li>
-            <li>
-              <Link href="/admin" className="text-silver hover:text-gold transition-colors">
-                03. AUCTION CONTROL
-              </Link>
-            </li>
-            <li>
-              <Link href="/judge" className="text-silver hover:text-gold transition-colors">
-                04. JUDGE MATRIX
+                02. LIVE AUCTION
               </Link>
             </li>
           </ul>

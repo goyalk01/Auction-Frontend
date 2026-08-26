@@ -45,23 +45,11 @@ export function HeroSection() {
           </p>
         </div>
 
-        {/* Action Controls (Editorial Buttons) */}
-        <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+        {/* Action Control */}
+        <div className="flex items-center justify-center pt-4">
           <Link href="/auction">
             <Button variant="gold" size="lg" rightIcon={<ArrowRight className="w-4 h-4" />}>
               ENTER LIVE AUCTION
-            </Button>
-          </Link>
-
-          <Link href="/team">
-            <Button variant="secondary" size="lg">
-              CAPTAIN PORTAL
-            </Button>
-          </Link>
-
-          <Link href="/admin">
-            <Button variant="outline" size="lg">
-              CONTROL DESK
             </Button>
           </Link>
         </div>

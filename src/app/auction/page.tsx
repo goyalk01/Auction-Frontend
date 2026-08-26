@@ -1,43 +1,50 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { BroadcastHeader } from "../../components/auction/BroadcastHeader";
-import { PlayerBroadcastCard } from "../../components/auction/PlayerBroadcastCard";
-import { LiveBiddingCenterpiece } from "../../components/auction/LiveBiddingCenterpiece";
-import { LiveBidFeed } from "../../components/auction/LiveBidFeed";
-import { FranchisePurseStrip } from "../../components/auction/FranchisePurseStrip";
+import { CommonBoard } from "../../components/auction/CommonBoard";
+import { TeamDossier } from "../../components/auction/TeamDossier";
 import { SoldOverlay } from "../../components/auction/SoldOverlay";
 import { UnsoldOverlay } from "../../components/auction/UnsoldOverlay";
 import { useAuction } from "../../lib/store/useAuction";
 
-export default function BigScreenAuctionPage() {
-  const { currentPlayer } = useAuction();
+export default function LiveAuctionPage() {
+  const { teams, teamsList } = useAuction();
+  const [viewMode, setViewMode] = useState<"common" | "team">("common");
+  const [selectedTeamId, setSelectedTeamId] = useState<string | null>(null);
+
+  const activeTeamState = selectedTeamId ? teams[selectedTeamId] : teamsList[0];
+
+  const handleSelectTeam = (teamId: string) => {
+    setSelectedTeamId(teamId);
+    setViewMode("team");
+  };
+
+  const handleSelectCommon = () => {
+    setViewMode("common");
+  };
 
   return (
-    <main className="h-screen w-screen bg-void flex flex-col overflow-hidden select-none bg-tech-grid">
-      {/* Broadcast Header Rail */}
-      <BroadcastHeader />
+    <main className="min-h-screen bg-void flex flex-col select-none bg-tech-grid font-sans">
+      {/* Dynamic Broadcast Header Rail */}
+      <BroadcastHeader
+        viewMode={viewMode}
+        selectedTeamId={selectedTeamId}
+        onSelectCommon={handleSelectCommon}
+        onSelectTeam={handleSelectTeam}
+      />
 
-      {/* Main Broadcast Control Arena */}
-      <div className="flex-1 p-4 sm:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-5 min-h-0 overflow-y-auto lg:overflow-hidden">
-        {/* Left: Player Lot Presentation (5 Cols) */}
-        <div className="lg:col-span-5 h-full">
-          <PlayerBroadcastCard player={currentPlayer} />
-        </div>
-
-        {/* Center: Live Bidding & Clock Centerpiece (4 Cols) */}
-        <div className="lg:col-span-4 h-full">
-          <LiveBiddingCenterpiece />
-        </div>
-
-        {/* Right: Live Bid Order Log (3 Cols) */}
-        <div className="lg:col-span-3 h-full">
-          <LiveBidFeed />
-        </div>
+      {/* Main Live Stage Container */}
+      <div className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6">
+        {viewMode === "common" ? (
+          <CommonBoard onSelectTeam={handleSelectTeam} />
+        ) : activeTeamState ? (
+          <TeamDossier
+            teamState={activeTeamState}
+            onBackToCommon={handleSelectCommon}
+          />
+        ) : null}
       </div>
-
-      {/* Bottom Franchise Purse Rail */}
-      <FranchisePurseStrip />
 
       {/* Cinematic Overlays */}
       <SoldOverlay />
