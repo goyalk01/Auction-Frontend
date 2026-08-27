@@ -1,6 +1,6 @@
 # Auction-Frontend
 
-**VIT Bhopal MUN Club — The IPL Mega Auction**
+**VITBMUN Club — The IPL Mega Auction**
 
 A production-grade, real-time fantasy IPL mega auction platform built for live in-person university bidding events (up to 60 concurrent participants across 15 franchises).
 
@@ -9,16 +9,14 @@ A production-grade, real-time fantasy IPL mega auction platform built for live i
 ## 🌟 Key Features
 
 - **Luxury Auction House Aesthetic**: Cinematic dark UI with gold accents, live purse tickers, glowing gavel overlays, and responsive trading terminals.
-- **15 Franchises & 120 Players**: 10 official IPL franchises + 5 regional squads, 120 curated players with roles, stats, and base prices.
-- **Strict Integer-Lakh Arithmetic**: Prevents floating-point financial bugs (₹100 Cr starting purse per team, tiered increment brackets).
-- **Multi-Role Portals**:
+- **15 Franchises & 200+ Real Players**: 10 official IPL franchises + 5 regional squads, 200+ real players with roles, stats, and base prices.
+- **Strict Integer-Lakh Arithmetic**: Prevents floating-point financial bugs (₹125 Cr starting purse per team, tiered increment brackets).
+- **Core Routes**:
   - `/` — Public Landing & Catalogue
-  - `/auction` — Big Screen 1080p Broadcast / Projector View
-  - `/team` — Franchise Captain Trading Terminal with Touch Bidding
+  - `/auction` — Live Auction Hub (Common Board + Team Dossier)
   - `/admin` — Auctioneer Mission Control Desk & Emergency Controls
-  - `/judge` — Judicial Evaluation Matrix & Compliance Dossiers
-- **Hybrid Architecture (Firebase + Local Mock)**:
-  - Firestore Atomic Transactions & Real-time Listeners for production live-event synchronization.
+- **Hybrid Architecture (Realtime + Local Mock Engine)**:
+  - Atomic Transactions & Real-time Listeners for production live-event synchronization.
   - In-browser `BroadcastChannel` & `localStorage` mock engine for offline development and local dry-runs.
 
 ---
@@ -41,23 +39,13 @@ cd Auction-Frontend
 npm install
 ```
 
-### Running Locally (Mock Mode)
+### Running Locally
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser. Open multiple tabs across `/auction`, `/team`, and `/admin` to test live cross-tab bidding!
-
-### Connecting to Firebase (Production Mode)
-
-1. Copy `.env.local.example` to `.env.local`:
-   ```bash
-   cp .env.local.example .env.local
-   ```
-2. Fill in your Firebase project credentials.
-3. Deploy Firestore security rules using `firebase deploy --only firestore:rules`.
-4. Seed the tournament database using `/api/seed` or the Admin portal.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
@@ -65,6 +53,5 @@ Open [http://localhost:3000](http://localhost:3000) in your browser. Open multip
 
 - **Framework**: Next.js 14 (App Router)
 - **Styling**: Tailwind CSS & Custom Design System
-- **Real-Time Database & Auth**: Firebase Firestore & Firebase Auth
 - **Audio Engine**: Web Audio API Synthesizer (Zero asset dependencies)
 - **Animations**: Framer Motion & Canvas Confetti

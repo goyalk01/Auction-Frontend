@@ -44,7 +44,7 @@ export function BroadcastHeader({
       : "text-silver-dark";
 
   return (
-    <header className="h-14 px-4 sm:px-6 lg:px-8 bg-void hairline-b flex items-center justify-between shrink-0 select-none">
+    <header className="h-14 px-4 sm:px-6 lg:px-8 bg-void hairline-b flex items-center justify-between shrink-0 select-none relative z-30">
       {/* Left: Brand & Home Link */}
       <div className="flex items-center gap-3 sm:gap-5">
         <Link
@@ -55,11 +55,16 @@ export function BroadcastHeader({
           <ArrowLeft className="w-4 h-4" />
         </Link>
 
-        <div className="flex items-center gap-2">
-          <span className="font-display font-black text-sm tracking-[0.15em] text-silver-bright uppercase">
-            VITB—MUN
+        <div className="flex items-center gap-2.5">
+          <img
+            src="/images/vitbmun-logo.png"
+            alt="VITBMUN logo"
+            className="h-7 w-auto object-contain shrink-0"
+          />
+          <span className="font-display font-black text-sm tracking-[0.18em] text-silver-bright uppercase">
+            VITBMUN
           </span>
-          <span className="text-[10px] font-mono text-silver-dark uppercase tracking-widest hidden md:inline">
+          <span className="text-[10px] font-mono text-gold uppercase tracking-widest hidden md:inline">
             {"//"} LIVE AUCTION
           </span>
         </div>

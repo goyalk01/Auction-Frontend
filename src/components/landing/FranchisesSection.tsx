@@ -7,8 +7,8 @@ export function FranchisesSection() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
-    <section className="py-24 bg-deep hairline-t hairline-b px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-12">
+    <section className="py-20 bg-deep hairline-t hairline-b px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto space-y-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="space-y-2">
             <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-gold uppercase">
@@ -20,7 +20,7 @@ export function FranchisesSection() {
           </div>
 
           <span className="text-xs font-mono text-silver-dark">
-            EQUAL PURSE: ₹100 CRORE (10,000 LAKHS) PER TEAM
+            EQUAL PURSE: ₹125 CRORE (12,500 LAKHS) PER TEAM
           </span>
         </div>
 
@@ -68,7 +68,7 @@ export function FranchisesSection() {
 
                 <div className="flex items-center gap-6 shrink-0 font-mono text-xs">
                   <span className="text-silver-dark hidden sm:inline">{team.city}</span>
-                  <span className="font-bold text-gold">₹100 CR</span>
+                  <span className="font-bold text-gold">₹125 CR</span>
                 </div>
               </div>
             );

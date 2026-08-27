@@ -9,18 +9,19 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "VITB-MUN | The IPL Mega Auction",
+  title: "VITBMUN | The IPL Mega Auction",
   description:
-    "Official Live Auction Platform for VIT Bhopal MUN Club IPL Mega Auction. 15 Franchises, ₹100 Cr virtual purse, real-time live bidding and squad evaluation.",
+    "Official Live Auction Platform for VIT Bhopal MUN Club IPL Mega Auction. 15 Franchises, ₹125 Cr virtual purse, real-time live bidding and squad evaluation.",
   keywords: [
     "IPL Auction",
     "VIT Bhopal MUN",
+    "VITBMUN",
     "IPL Mega Auction",
     "Fantasy Cricket Auction",
     "Live Bidding",
-    "VITB MUN Club",
+    "VITBMUN Club",
   ],
-  authors: [{ name: "VITB-MUN Technical Team" }],
+  authors: [{ name: "VITBMUN Technical Team" }],
 };
 
 export default function RootLayout({

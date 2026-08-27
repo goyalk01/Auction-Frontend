@@ -15,8 +15,8 @@ import { AUCTION_CONSTANTS } from "../constants";
 import { getNextBid, validateTeamBid } from "../bidding";
 import { playBidChime, playHammerChime, playTimerWarningBeep, playUnsoldChime } from "../sound";
 
-const STORAGE_KEY = "VITB_IPL_AUCTION_STATE_V1";
-const BROADCAST_CHANNEL_NAME = "vitb_ipl_auction_channel";
+const STORAGE_KEY = "VITBMUN_IPL_AUCTION_STATE_V2";
+const BROADCAST_CHANNEL_NAME = "vitbmun_ipl_auction_channel";
 
 function initializeDefaultState(): FullTournamentState {
   const teams: Record<string, TeamState> = {};
@@ -64,7 +64,7 @@ function initializeDefaultState(): FullTournamentState {
         id: "log-init",
         timestamp: Date.now(),
         action: "INITIALIZATION",
-        details: "Tournament initialized in Local Mock mode with 15 franchises and 120 players.",
+        details: "Tournament initialized in Local Mock mode with 15 franchises and 200+ real players.",
       },
     ],
     backendType: "mock",

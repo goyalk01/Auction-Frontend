@@ -8,44 +8,29 @@ export function HowItWorksSection() {
   const steps = [
     {
       num: "01",
-      title: "GET YOUR FRANCHISE",
-      subtitle: "IDENTITY & ALLOCATION",
-      description:
-        "Draw your official franchise from 15 competing entities and receive your starting ₹100 Crore purse.",
+      title: "GET YOUR FRANCHISE (₹125 CR PURSE)",
     },
     {
       num: "02",
       title: "PLAN YOUR STRATEGY",
-      subtitle: "ROLE & PURSE MAPPING",
-      description:
-        "Map out priority targets across Batters, Bowlers, All-Rounders, and WKs within budget allocation brackets.",
     },
     {
       num: "03",
       title: "BID LIVE ON THE BLOCK",
-      subtitle: "20S CLOCKS & INCREMENTS",
-      description:
-        "Participate in real-time bidding rounds. Each incoming bid resets the clock to 10 seconds under tiered increments.",
     },
     {
       num: "04",
       title: "BUILD COMPLIANT SQUAD",
-      subtitle: "ROSTER MINIMUMS",
-      description:
-        "Assemble 7 to 11 players satisfying mandatory requirements (at least 1 Wicketkeeper and 3 Bowlers).",
     },
     {
       num: "05",
       title: "FACE THE JUDGES",
-      subtitle: "EXECUTIVE EVALUATION",
-      description:
-        "Defend your squad's balance, depth, and tactical viability before the Executive Board in Phase 6.",
     },
   ];
 
   return (
-    <section className="py-24 bg-deep hairline-t hairline-b px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-12">
+    <section className="py-20 bg-deep hairline-t hairline-b px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto space-y-10">
         <div className="space-y-2">
           <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-gold uppercase">
             OPERATING TIMELINE
@@ -63,12 +48,12 @@ export function HowItWorksSection() {
               <div
                 key={step.num}
                 onMouseEnter={() => setHoveredIdx(idx)}
-                className={`py-6 sm:py-8 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors cursor-pointer ${
+                className={`py-5 sm:py-6 flex items-center justify-between gap-4 transition-colors cursor-pointer ${
                   isHovered ? "bg-white/[0.02]" : ""
                 }`}
               >
                 {/* Step Num & Title */}
-                <div className="flex items-start sm:items-center gap-6">
+                <div className="flex items-center gap-6">
                   <span
                     className={`font-mono text-xl sm:text-2xl font-bold tracking-wider ${
                       isHovered ? "text-gold" : "text-silver-dark"
@@ -77,23 +62,17 @@ export function HowItWorksSection() {
                     {step.num}
                   </span>
 
-                  <div>
-                    <h3
-                      className={`text-lg sm:text-2xl font-display font-black uppercase tracking-tight ${
-                        isHovered ? "text-silver-bright" : "text-silver"
-                      }`}
-                    >
-                      {step.title}
-                    </h3>
-                    <span className="text-[10px] font-mono text-silver-dark uppercase tracking-widest block mt-0.5">
-                      {step.subtitle}
-                    </span>
-                  </div>
+                  <h3
+                    className={`text-base sm:text-xl font-display font-black uppercase tracking-tight transition-colors ${
+                      isHovered ? "text-silver-bright" : "text-silver"
+                    }`}
+                  >
+                    {step.title}
+                  </h3>
                 </div>
 
-                {/* Description */}
-                <div className="md:max-w-md text-xs text-silver font-sans leading-relaxed md:text-right">
-                  {step.description}
+                <div className="hidden sm:block font-mono text-[10px] text-silver-dark tracking-widest uppercase">
+                  PHASE {step.num}
                 </div>
               </div>
             );

@@ -30,7 +30,7 @@ export default function LiveAuctionPage() {
       <div className="absolute inset-0 bg-tech-grid pointer-events-none z-[2] opacity-70" />
 
       {/* Dynamic Broadcast Header Rail */}
-      <div className="relative z-10">
+      <div className="relative z-30">
         <BroadcastHeader
           viewMode={viewMode}
           selectedTeamId={selectedTeamId}

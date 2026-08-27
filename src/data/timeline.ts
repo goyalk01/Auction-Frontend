@@ -36,7 +36,7 @@ export const EVENT_TIMELINE: TimelinePhase[] = [
     type: "STRATEGY",
     bulletPoints: [
       "Draw for 15 franchise allocations",
-      "Purse verification (₹100 Cr starting balance)",
+      "Purse verification (₹125 Cr starting balance)",
       "Team internal strategy and target role allocation",
     ],
   },
@@ -115,7 +115,7 @@ export const EVENT_TIMELINE: TimelinePhase[] = [
     phaseNumber: 8,
     title: "Feedback & Closing Ceremony",
     shortTitle: "Closing",
-    description: "Closing remarks, delegate feedback, and conclusion of the VITB-MUN IPL Mega Auction.",
+    description: "Closing remarks, delegate feedback, and conclusion of the VITBMUN IPL Mega Auction.",
     duration: "15 Mins",
     type: "CEREMONY",
     bulletPoints: [

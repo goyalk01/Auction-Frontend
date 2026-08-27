@@ -69,7 +69,7 @@ export function PhaseManager() {
         isOpen={resetModalOpen}
         onClose={() => setResetModalOpen(false)}
         title="CONFIRM TOURNAMENT RESET"
-        subtitle="This action will restore all 15 franchises to ₹100 Cr and wipe all active rosters."
+        subtitle="This action will restore all 15 franchises to ₹125 Cr and wipe all active rosters."
         maxWidth="sm"
       >
         <div className="space-y-4 font-mono text-xs text-silver">

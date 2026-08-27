@@ -43,7 +43,7 @@ export interface Franchise {
   accentColor: string; // Hex
   bgGradient: string;
   textColor: string;
-  startingPurse: number; // in Lakhs (10000 = ₹100 Cr)
+  startingPurse: number; // in Lakhs (12500 = ₹125 Cr)
   captainName?: string;
 }
 
@@ -82,13 +82,7 @@ export type AuctionPhase =
   | "RESULTS"
   | "CLOSING";
 
-export type AuctionStatus =
-  | "IDLE"
-  | "READY"
-  | "LIVE"
-  | "PAUSED"
-  | "SOLD"
-  | "UNSOLD";
+export type AuctionStatus = "IDLE" | "READY" | "LIVE" | "PAUSED" | "SOLD" | "UNSOLD";
 
 export interface AuctionState {
   phase: AuctionPhase;
@@ -97,7 +91,7 @@ export interface AuctionState {
   currentPlayerId: string | null;
   currentBid: number; // in Lakhs
   leadingTeamId: string | null;
-  timer: number; // in seconds
+  timer: number; // seconds
   isTimerRunning: boolean;
   bidSequence: number;
   lastBidAt: number | null;
@@ -111,10 +105,12 @@ export interface AuctionState {
   unsoldPlayerOverlay: Player | null;
 }
 
-export interface AuditLog {
+export interface AuditLogEntry {
   id: string;
   timestamp: number;
   action: string;
   details: string;
-  adminRole?: string;
+  actor?: "ADMIN" | "SYSTEM" | "CAPTAIN";
 }
+
+export type AuditLog = AuditLogEntry;

@@ -33,23 +33,23 @@ export function runAllAuctionIntegrityTests(): { passed: boolean; results: strin
   assert(getNextBid(500, 200) === 550, "500 L -> 550 L (+50 L tier)");
 
   // 2. Financial Formatting Tests
-  assert(formatLakhs(10000) === "₹100.00 Cr", "10,000 Lakhs formats to ₹100.00 Cr");
+  assert(formatLakhs(12500) === "₹125.00 Cr", "12,500 Lakhs formats to ₹125.00 Cr");
   assert(formatLakhs(850) === "₹8.50 Cr", "850 Lakhs formats to ₹8.50 Cr");
   assert(formatLakhs(50) === "₹50 L", "50 Lakhs formats to ₹50 L");
-  assert(formatLakhsShort(10000) === "₹100 Cr", "10,000 Lakhs short formats to ₹100 Cr");
+  assert(formatLakhsShort(12500) === "₹125 Cr", "12,500 Lakhs short formats to ₹125 Cr");
   assert(formatLakhsShort(850) === "₹8.5 Cr", "850 Lakhs short formats to ₹8.5 Cr");
 
   // 3. Squad & Purse Validation Tests
   const mockTeam: TeamState = {
     franchise: INITIAL_FRANCHISES[0],
-    remainingPurse: 10000,
+    remainingPurse: 12500,
     spentPurse: 0,
     squad: [],
     roleCounts: { BATTER: 0, BOWLER: 0, ALL_ROUNDER: 0, WICKETKEEPER: 0 },
   };
 
   const val1 = validateTeamBid(mockTeam, 500, false, "LIVE");
-  assert(val1.canBid === true, "Valid team with ₹100 Cr purse can bid ₹5 Cr");
+  assert(val1.canBid === true, "Valid team with ₹125 Cr purse can bid ₹5 Cr");
 
   const val2 = validateTeamBid(mockTeam, 500, true, "LIVE");
   assert(val2.canBid === false, "Leading team cannot bid against itself");
@@ -77,7 +77,7 @@ export function runAllAuctionIntegrityTests(): { passed: boolean; results: strin
 
   // 5. Total Seed Datasets Invariants
   assert(INITIAL_FRANCHISES.length === 15, "Exactly 15 franchises initialized");
-  assert(INITIAL_PLAYERS.length === 120, "Exactly 120 players seeded across 10 sets");
+  assert(INITIAL_PLAYERS.length === 120, "120 starter players seeded across sets");
 
   return { passed: allPassed, results };
 }

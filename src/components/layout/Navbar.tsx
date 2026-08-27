@@ -39,15 +39,22 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 w-full bg-void/95 hairline-b select-none">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-        {/* Brand (Minimalist) */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <span className="font-display font-black text-sm tracking-[0.15em] text-silver-bright uppercase">
-            VITB—MUN
-          </span>
-          <span className="text-[10px] font-mono text-silver-dark tracking-widest uppercase">
-            {"//"}  LOTS
-          </span>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        {/* Brand with Official VITBMUN Logo */}
+        <Link href="/" className="flex items-center gap-3 group">
+          <img
+            src="/images/vitbmun-logo.png"
+            alt="VITBMUN logo"
+            className="h-9 w-auto object-contain shrink-0"
+          />
+          <div className="flex items-center gap-2">
+            <span className="font-display font-black text-lg sm:text-xl tracking-[0.18em] text-silver-bright uppercase">
+              VITBMUN
+            </span>
+            <span className="text-[10px] font-mono text-gold tracking-widest uppercase hidden sm:inline">
+              {"//"} MEGA AUCTION
+            </span>
+          </div>
         </Link>
 
         {/* Desktop Navigation */}
@@ -78,7 +85,7 @@ export function Navbar() {
         {/* Right Status & Controls */}
         <div className="flex items-center gap-3.5">
           {/* Backend Connection Indicator */}
-          <div className="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded-sm bg-deep border border-graphite">
+          <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-sm bg-deep border border-graphite">
             <span className={`w-1.5 h-1.5 rounded-full ${connectionDot}`} />
             <span className={`text-[9px] font-mono font-bold uppercase tracking-widest ${connectionText}`}>
               {connectionLabel}

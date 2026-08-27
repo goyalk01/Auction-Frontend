@@ -26,7 +26,7 @@ export function AllTeamsPurseTable({ onSelectTeam }: AllTeamsPurseTableProps) {
           </span>
         </div>
         <span className="text-[10px] text-silver-dark uppercase tracking-wider">
-          LIVE BALANCE (₹100 CR CAP)
+          LIVE BALANCE (₹125 CR CAP)
         </span>
       </div>
 

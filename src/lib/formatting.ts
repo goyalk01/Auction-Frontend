@@ -2,14 +2,14 @@ import { AUCTION_CONSTANTS } from "./constants";
 
 /**
  * Formats Lakhs into standard Indian currency representation:
- * e.g., 10000 -> "₹100.00 Cr", 150 -> "₹1.50 Cr", 40 -> "₹40 L"
+ * e.g., 12500 -> "₹125.00 Cr", 150 -> "₹1.50 Cr", 40 -> "₹40 L"
  */
 export function formatLakhs(lakhs: number): string {
   if (lakhs === 0) return "₹0 L";
   
   if (lakhs >= AUCTION_CONSTANTS.CR_IN_LAKHS) {
     const crValue = lakhs / AUCTION_CONSTANTS.CR_IN_LAKHS;
-    // If it's a clean integer like 100, format as 100.00 Cr
+    // If it's a clean integer like 125, format as 125.00 Cr
     return `₹${crValue.toFixed(2)} Cr`;
   }
   
@@ -18,7 +18,7 @@ export function formatLakhs(lakhs: number): string {
 
 /**
  * Compact format for badges / compact tickers:
- * e.g. 10000 -> "₹100 Cr", 150 -> "₹1.5 Cr", 40 -> "₹40L"
+ * e.g. 12500 -> "₹125 Cr", 150 -> "₹1.5 Cr", 40 -> "₹40L"
  */
 export function formatLakhsShort(lakhs: number): string {
   if (lakhs === 0) return "₹0";

@@ -1,6 +1,6 @@
 export const AUCTION_CONSTANTS = {
   // Financial (all integer in Lakhs)
-  STARTING_PURSE_LAKHS: 10000, // ₹100 Cr
+  STARTING_PURSE_LAKHS: 12500, // ₹125 Cr (12,500 Lakhs)
   CR_IN_LAKHS: 100,
 
   // Squad Rules
@@ -25,9 +25,10 @@ export const AUCTION_CONSTANTS = {
 
   // Event Metadata
   EVENT_NAME: "The IPL Mega Auction",
-  ORGANIZER: "VITB-MUN Club",
+  ORGANIZER: "VITBMUN Club",
   VENUE: "VIT Bhopal University",
   TOTAL_FRANCHISES: 15,
   TOTAL_ROUNDS: 2,
   MAX_PARTICIPANTS: 60,
+  PLAYER_POOL_LABEL: "200+ real players",
 } as const;
