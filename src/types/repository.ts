@@ -68,4 +68,10 @@ export interface AuctionRepository {
    */
   toggleSound(): void;
   clearOverlays(): void;
+
+  /**
+   * State Backup & Recovery Operations
+   */
+  exportState(): string;
+  importState(jsonState: string): Promise<{ success: boolean; message?: string }>;
 }

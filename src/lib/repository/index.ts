@@ -16,7 +16,6 @@ export function getAuctionRepository(): AuctionRepository {
   return repositoryInstance;
 }
 
-export const auctionRepository = getAuctionRepository();
 export * from "./AuctionRepository";
 export { MockAuctionRepository } from "./MockAuctionRepository";
 export { FirebaseAuctionRepository } from "./FirebaseAuctionRepository";

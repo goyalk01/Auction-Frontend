@@ -14,6 +14,7 @@ import { INITIAL_PLAYERS } from "../../data/players";
 import { AUCTION_CONSTANTS } from "../constants";
 import { getNextBid, validateTeamBid } from "../bidding";
 import { playBidChime, playHammerChime, playTimerWarningBeep, playUnsoldChime } from "../sound";
+import { formatLakhs } from "../formatting";
 
 const STORAGE_KEY = "VITBMUN_IPL_AUCTION_STATE_V2";
 const BROADCAST_CHANNEL_NAME = "vitbmun_ipl_auction_channel";
@@ -326,6 +327,34 @@ export class MockAuctionRepository implements AuctionRepository {
       return { success: false, message: "Invalid team or player" };
     }
 
+    if (amountLakhs < player.basePrice) {
+      return {
+        success: false,
+        message: `Manual bid (${formatLakhs(amountLakhs)}) cannot be lower than base price (${formatLakhs(player.basePrice)}).`,
+      };
+    }
+
+    if (auction.currentBid > 0 && amountLakhs <= auction.currentBid) {
+      return {
+        success: false,
+        message: `Manual bid (${formatLakhs(amountLakhs)}) must exceed current bid (${formatLakhs(auction.currentBid)}).`,
+      };
+    }
+
+    if (teamState.squad.length >= AUCTION_CONSTANTS.MAX_SQUAD_SIZE) {
+      return {
+        success: false,
+        message: `Maximum squad limit (${AUCTION_CONSTANTS.MAX_SQUAD_SIZE} players) reached for ${teamState.franchise.name}.`,
+      };
+    }
+
+    if (teamState.remainingPurse < amountLakhs) {
+      return {
+        success: false,
+        message: `Insufficient purse. Required: ${formatLakhs(amountLakhs)}, Available: ${formatLakhs(teamState.remainingPurse)}.`,
+      };
+    }
+
     const newBid: Bid = {
       id: `bid-manual-${Date.now()}`,
       playerId: player.id,
@@ -370,6 +399,13 @@ export class MockAuctionRepository implements AuctionRepository {
 
     if (!player || !winningTeamId || winningPrice <= 0) {
       return { success: false, message: "No active bid or winning team to sell to" };
+    }
+
+    if (winningPrice < player.basePrice) {
+      return {
+        success: false,
+        message: `Winning bid (${formatLakhs(winningPrice)}) cannot be below base price (${formatLakhs(player.basePrice)}).`,
+      };
     }
 
     const teamState = teams[winningTeamId];
@@ -459,6 +495,13 @@ export class MockAuctionRepository implements AuctionRepository {
     }
 
     const currentIndex = availablePlayers.findIndex((p) => p.id === auction.currentPlayerId);
+    if (currentIndex >= 0 && currentIndex === availablePlayers.length - 1) {
+      const nextP = availablePlayers[0];
+      await this.selectPlayer(nextP.id);
+      this.logAudit("NEXT_PLAYER", "Completed cycle through available player pool. Cycled back to first available player.");
+      return { success: true, message: "Cycled back to beginning of player pool." };
+    }
+
     const nextP = availablePlayers[(currentIndex + 1) % availablePlayers.length];
 
     await this.selectPlayer(nextP.id);
@@ -491,9 +534,13 @@ export class MockAuctionRepository implements AuctionRepository {
     if (previousBid) {
       this.state.auction.currentBid = previousBid.amount;
       this.state.auction.leadingTeamId = previousBid.teamId;
+      this.state.auction.timer = AUCTION_CONSTANTS.BID_RESET_TIMER_SECONDS;
+      this.state.auction.isTimerRunning = true;
     } else {
       this.state.auction.currentBid = 0;
       this.state.auction.leadingTeamId = null;
+      this.state.auction.timer = AUCTION_CONSTANTS.INITIAL_TIMER_SECONDS;
+      this.state.auction.isTimerRunning = false;
     }
 
     this.logAudit("UNDO_BID", "Last bid was undone by admin");
@@ -580,5 +627,26 @@ export class MockAuctionRepository implements AuctionRepository {
     this.state.auction.soldPlayerOverlay = null;
     this.state.auction.unsoldPlayerOverlay = null;
     this.saveState({ ...this.state });
+  }
+
+  public exportState(): string {
+    return JSON.stringify(this.state, null, 2);
+  }
+
+  public async importState(jsonString: string): Promise<{ success: boolean; message?: string }> {
+    try {
+      const parsed = JSON.parse(jsonString) as FullTournamentState;
+      if (!parsed.auction || !parsed.players || !parsed.teams) {
+        return { success: false, message: "Invalid backup format: missing essential tournament data." };
+      }
+      parsed.backendType = "mock";
+      parsed.connectionStatus = "connected";
+      this.state = parsed;
+      this.saveState(this.state);
+      this.logAudit("IMPORT_STATE", "Tournament state successfully restored from backup file.");
+      return { success: true };
+    } catch {
+      return { success: false, message: "Failed to parse backup JSON file." };
+    }
   }
 }

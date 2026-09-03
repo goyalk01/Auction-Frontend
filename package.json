@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "npx tsx --test src/__tests__/*.test.ts"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.3",

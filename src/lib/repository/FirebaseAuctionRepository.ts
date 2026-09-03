@@ -560,6 +560,10 @@ export class FirebaseAuctionRepository implements AuctionRepository {
         const teamData = teamSnap.data() as FirestoreTeamDoc;
         const playerData = playerSnap.data() as FirestorePlayerDoc;
 
+        if (winningPrice < playerData.basePrice) {
+          throw new Error(`Winning price (₹${winningPrice}L) cannot be below base price (₹${playerData.basePrice}L).`);
+        }
+
         const now = Date.now();
 
         // 1. Update Player Doc
@@ -1130,5 +1134,23 @@ export class FirebaseAuctionRepository implements AuctionRepository {
     this.state.auction.soldPlayerOverlay = null;
     this.state.auction.unsoldPlayerOverlay = null;
     this.notify();
+  }
+
+  public exportState(): string {
+    return JSON.stringify(this.state, null, 2);
+  }
+
+  public async importState(jsonString: string): Promise<{ success: boolean; message?: string }> {
+    try {
+      const parsed = JSON.parse(jsonString) as FullTournamentState;
+      if (!parsed.auction || !parsed.players || !parsed.teams) {
+        return { success: false, message: "Invalid backup format: missing essential tournament data." };
+      }
+      this.state = parsed;
+      this.notify();
+      return { success: true, message: "State imported into client session." };
+    } catch {
+      return { success: false, message: "Failed to parse backup JSON file." };
+    }
   }
 }

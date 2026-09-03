@@ -7,7 +7,7 @@ import { AUCTION_CONSTANTS } from "../../lib/constants";
 import { RoleBadge } from "../ui/Badge";
 import { TeamCurrentLotStatus } from "./TeamCurrentLotStatus";
 import { TeamBidHistory } from "./TeamBidHistory";
-import { SquadTracker } from "../team/SquadTracker";
+import { SquadTracker } from "./SquadTracker";
 import { ShieldCheck, AlertCircle, ArrowLeft } from "lucide-react";
 
 interface TeamDossierProps {

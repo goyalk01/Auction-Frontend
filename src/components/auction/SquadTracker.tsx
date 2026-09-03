@@ -12,19 +12,19 @@ export function SquadTracker({ teamState }: SquadTrackerProps) {
   const { squad, roleCounts } = teamState;
 
   return (
-    <div className="p-5 sm:p-6 bg-charcoal border border-white/[0.08] rounded-md space-y-5 select-none">
+    <div className="p-5 sm:p-6 bg-charcoal border border-white/[0.08] rounded-md space-y-5 select-none font-mono">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-white/[0.07] pb-3">
-        <span className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-silver-light">
+        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-silver-light">
           ROSTER {"//"} ACQUIRED SQUAD
         </span>
-        <span className="text-xs font-mono text-silver-dark">
+        <span className="text-xs text-silver-dark">
           {squad.length} / {AUCTION_CONSTANTS.MAX_SQUAD_SIZE} SLOTS
         </span>
       </div>
 
       {/* Role Counts Mini Strip */}
-      <div className="grid grid-cols-4 gap-2 text-center font-mono">
+      <div className="grid grid-cols-4 gap-2 text-center">
         <div className="p-2 rounded-sm bg-deep border border-graphite">
           <span className="text-[9px] text-silver-dark uppercase block">BAT</span>
           <span className="text-sm font-bold text-silver-bright">{roleCounts.BATTER}</span>
@@ -44,8 +44,8 @@ export function SquadTracker({ teamState }: SquadTrackerProps) {
       </div>
 
       {/* Clean Financial Roster Table */}
-      <div className="border border-white/[0.07] rounded-sm overflow-hidden">
-        <table className="w-full text-left text-xs font-mono">
+      <div className="border border-white/[0.07] rounded-sm overflow-x-auto">
+        <table className="w-full text-left text-xs min-w-[320px]">
           <thead>
             <tr className="bg-deep border-b border-white/[0.07] text-[10px] text-silver-dark uppercase">
               <th className="py-2.5 px-3">PLAYER</th>
@@ -61,7 +61,7 @@ export function SquadTracker({ teamState }: SquadTrackerProps) {
                 </td>
               </tr>
             ) : (
-              squad.map((player, idx) => (
+              squad.map((player) => (
                 <tr key={player.id} className="hover:bg-white/[0.02] transition-colors">
                   <td className="py-2.5 px-3">
                     <span className="text-silver-bright font-bold font-display text-sm uppercase">

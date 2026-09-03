@@ -11,6 +11,15 @@ import { UserRole, UserSession } from "../../types/auth";
 import { INITIAL_FRANCHISES } from "../../data/franchises";
 
 const AUTH_STORAGE_KEY = "VITB_IPL_AUTH_SESSION_V1";
+const SESSION_MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24 Hours
+
+function getAdminPasscodes(): string[] {
+  const envPasscodes = process.env.NEXT_PUBLIC_ADMIN_PASSCODES;
+  if (envPasscodes) {
+    return envPasscodes.split(",").map((p) => p.trim().toLowerCase()).filter(Boolean);
+  }
+  return ["admin2026", "vitb-ipl-admin", "auctioneer2026"];
+}
 
 export async function getCurrentUserSession(): Promise<UserSession | null> {
   if (typeof window === "undefined") return null;
@@ -18,10 +27,17 @@ export async function getCurrentUserSession(): Promise<UserSession | null> {
   try {
     const stored = localStorage.getItem(AUTH_STORAGE_KEY);
     if (stored) {
-      return JSON.parse(stored);
+      const parsed = JSON.parse(stored) as UserSession;
+      if (parsed.authenticatedAt && Date.now() - parsed.authenticatedAt > SESSION_MAX_AGE_MS) {
+        localStorage.removeItem(AUTH_STORAGE_KEY);
+        return null;
+      }
+      return parsed;
     }
-  } catch {
-    // Ignore parse error
+  } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn("Failed to read auth session from storage:", err);
+    }
   }
   return null;
 }
@@ -84,7 +100,7 @@ export async function authenticateTeam(
 export async function authenticateAdmin(
   passcode: string
 ): Promise<{ success: boolean; session?: UserSession; message?: string }> {
-  const validPasscodes = ["admin2026", "vitb-ipl-admin", "auctioneer2026"];
+  const validPasscodes = getAdminPasscodes();
   const isValid = validPasscodes.includes(passcode.trim().toLowerCase());
 
   if (!isValid) {
